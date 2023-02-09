@@ -1,38 +1,45 @@
 /**
- * @file
- * @date 2/2/2023
+ * @file Polygon
+ * @date 2/9/2023
  * @author Theo
- * @description creates any regular polygon with a variety of methods
+ * @description Creates any regular polygon with a variety of methods
  */
-import java.text.DecimalFormat;
 public class Polygon {
     private int numSides;
     private double sideLength;
     private String shapeName;
     private boolean validPolygonSides = true;
     private boolean validPolygonSideLength = true;
+
+    private double area;
     public Polygon(){
         numSides = 3;
         sideLength = 1;
         shapeName = "triangle";
     }
-    //Allows the sides, side length, and shape type to be set
+
+    /**
+     * Creates a new rectangle with side number, side length, and shape type
+     * @param sides
+     * @param length
+     * @param shape
+     */
     public Polygon(int sides, double length, String shape){
         shapeName = shape;
-        //tests if side amount is allowed and assigns numSides if true
+
         if(sides >= 3){
             numSides = sides;
         }
-        //side number is set to -1 if invalid and invalid is set to true
+
         else{
             numSides = 3;
             validPolygonSides = false;
         }
-        //Tests is sidelength is allowed and sets it if allowed
+
         if(length > 0) {
             sideLength = length;
         }
-        //if sideLength is invalids sets to -1 and makes polygon false
+
         else{
             sideLength = 1;
             validPolygonSideLength = false;
@@ -40,26 +47,35 @@ public class Polygon {
 
 
     }
-    //returns value numSides
+
+    /**
+     * @return returns the number of sides of the polygon
+     */
     public int getNumSides(){
         return numSides;
     }
-    //returns value sidelength
+    /**
+     * @return returns the side length of the polygon's sides to three decimal places
+     */
     public double getSideLength(){
-        return sideLength;
+        return Math.round(1000*sideLength)/1000.0;
     }
-    //returns name of polygon
+    /**
+     * @return returns the type of the polygon
+     */
     public String getShapeType(){
         return shapeName;
     }
-
+    /**
+     * @return Returns if the polygon is valid
+     */
     public boolean isValidPolygon(){
         return validPolygonSideLength && validPolygonSides;
     }
 
     /**
      * @Description Modifies the number of sides of the polygon
-     * @param n
+     * @param n is the new number of sides
      */
     public void setNumSides(int n){
 
@@ -93,28 +109,41 @@ public class Polygon {
      * @Desciption Changes the name of the polygon
      * @param name
      */
-    public void setShape(String name){
+    public void setShapeName(String name){
         shapeName = name;
     }
-
+    /**
+     * @Description Calculates perimeter of the polygon
+     * @Return Returns the perimeter of the polygon to three decimal places
+     */
     public double calculatePerimeter(){
 
-            return sideLength*numSides;
+            return Math.round(1000*sideLength*numSides)/1000.0;
     }
     /**
-     * @Description Calculates and returns the area of the polygon
+     * @Description Calculates area of polygon
+     * @Return Returns the area of the polygon to three decimal places
      */
     public double calculateArea(){
-        double apothem = sideLength/(2*Math.tan(Math.PI/numSides));
-
-        return (sideLength*numSides*apothem)/2;
+        area = Math.round(1000*sideLength*numSides*sideLength/(2*Math.tan(Math.PI/numSides)))/2000.0;
+        return area;
     }
+    /**
+     * @Returns the area of the polygon
+     */
+    public double getArea(){
+        return area;
+    }
+
+    /**
+     * @description Prints out the information of the polygon formatted nicely
+     * @return A string with the information of the polygon
+     */
     public String toString(){
-        DecimalFormat formatter = new DecimalFormat("#.###");
         if(validPolygonSides && validPolygonSideLength){
-            return "Your shape is a "+shapeName+ " and it has "+numSides+" sides.\n" +
-                    "It has a side length of "+sideLength+"\nIt has a perimeter of "+formatter.format(calculatePerimeter())+" units."+
-                    "\nIt has an area of "+formatter.format(calculateArea())+".";
+            return "Your shape is a "+getShapeType()+ " and it has "+getNumSides()+" sides.\n" +
+                    "It has a side length of "+getSideLength()+"\nIt has a perimeter of "+calculatePerimeter()+" units."+
+                    "\nIt has an area of "+calculateArea()+".";
 
         }
         else{
