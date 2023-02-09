@@ -10,12 +10,12 @@ public class Polygon {
     private String shapeName;
     private boolean validPolygonSides = true;
     private boolean validPolygonSideLength = true;
-
     private double area;
+  
     public Polygon(){
         numSides = 3;
         sideLength = 1;
-        shapeName = "triangle";
+        shapeName = "Triangle";
     }
 
     /**
@@ -25,27 +25,25 @@ public class Polygon {
      * @param shape
      */
     public Polygon(int sides, double length, String shape){
-        shapeName = shape;
 
-        if(sides >= 3){
+        if(sides >= 3 && length > 0){
             numSides = sides;
+           sideLength = length;
         }
-
         else{
-            numSides = 3;
+          if(sides < 3){
             validPolygonSides = false;
-        }
-
-        if(length > 0) {
-            sideLength = length;
-        }
-
-        else{
-            sideLength = 1;
+          }
+          if(length <= 0){
             validPolygonSideLength = false;
+          }
+          sideLength = 1;
+          numSides = 3;
+          shapeName = "Triangle";
         }
-
-
+      if(validPolygonSides && validPolygonSideLength){
+        shapeName = shape;
+      }
     }
 
     /**
@@ -55,10 +53,10 @@ public class Polygon {
         return numSides;
     }
     /**
-     * @return returns the side length of the polygon's sides to three decimal places
+     * @return returns the side length of the polygon's sides 
      */
     public double getSideLength(){
-        return Math.round(1000*sideLength)/1000.0;
+        return sideLength;
     }
     /**
      * @return returns the type of the polygon
@@ -83,11 +81,6 @@ public class Polygon {
             numSides = n;
             validPolygonSides = true;
         }
-        else{
-            numSides = 3;
-            validPolygonSides = false;
-        }
-
     }
 
     /**
@@ -98,10 +91,6 @@ public class Polygon {
         if(sideL > 0){
             sideLength = sideL;
             validPolygonSideLength = true;
-        }
-        else{
-            sideLength = 1;
-            validPolygonSideLength = false;
         }
     }
 
@@ -125,14 +114,16 @@ public class Polygon {
      * @Return Returns the area of the polygon to three decimal places
      */
     public double calculateArea(){
-        area = Math.round(1000*sideLength*numSides*sideLength/(2*Math.tan(Math.PI/numSides)))/2000.0;
+        area = Math.round(1000*sideLength*numSides*sideLength/(2*Math.tan(Math.PI/numSides))/2)/1000.0;
         return area;
     }
     /**
-     * @Returns the area of the polygon
+     * @Description Calculates area of polygon
+     * @Return the area of the polygon to three decimal places
      */
     public double getArea(){
-        return area;
+      area = calculateArea();
+      return area;
     }
 
     /**
@@ -141,18 +132,13 @@ public class Polygon {
      */
     public String toString(){
         if(validPolygonSides && validPolygonSideLength){
-            return "Your shape is a "+getShapeType()+ " and it has "+getNumSides()+" sides.\n" +
-                    "It has a side length of "+getSideLength()+"\nIt has a perimeter of "+calculatePerimeter()+" units."+
+            return "Your shape is a "+getShapeType()+ " and it has "+getNumSides()+" sides." +
+                    "\nIt has a side length of "+getSideLength()+
+                    "\nIt has a perimeter of "+calculatePerimeter()+"units."+
                     "\nIt has an area of "+calculateArea()+".";
-
         }
         else{
-            return "Not a valid polygon. Your polygon has "+numSides+" sides, is named "+shapeName+", and has a side length of " +sideLength;
+            return "Not a valid polygon. Your polygon has "+numSides+" sides, is named "+shapeName+", and has a side length of " +sideLength+".";
         }
     }
-
 }
-
-
-
-
