@@ -133,7 +133,7 @@ public class Polygon {
     public String toString(){
         if(validPolygonSides && validPolygonSideLength){
             return "Your shape is a "+getShapeType()+ " and it has "+getNumSides()+" sides." +
-                    "\nIt has a side length of "+getSideLength()+
+                    "\nIt has a side length of "+Math.round(1000*getSideLength())/1000.0+
                     "\nIt has a perimeter of "+calculatePerimeter()+"units."+
                     "\nIt has an area of "+calculateArea()+".";
         }
